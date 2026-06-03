@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:practice_flutter/screens/home_page.dart';
+import 'package:practice_flutter/screens/Gridview.dart';
 
 class Listview extends StatelessWidget {
   final items = List<String>.generate(100, (i) => "item $i");
@@ -26,7 +26,10 @@ class Listview extends StatelessWidget {
             ListTile(
               title: const Text('Item 2'),
               onTap: () {
-                Navigator.pop(context);
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Gridview()),
+                        );
               },
             ),
           ],

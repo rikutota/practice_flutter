@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practice_flutter/screens/Listview.dart';
+import 'package:practice_flutter/screens/gridview.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -36,7 +37,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: const Text('Item 2'),
               onTap: () {
-                Navigator.pop(context);
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Gridview()),
+                      );
               },
             ),
           ],
