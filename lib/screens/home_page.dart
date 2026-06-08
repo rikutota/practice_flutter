@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart'; 
-import 'package:practice_flutter/screens/Listview.dart';
-import 'package:practice_flutter/screens/gridview.dart';
-import 'package:practice_flutter/screens/map.dart';
+import 'package:practice_flutter/widgets/app_drawer.dart';
 
 // 修正点2: HookConsumerWidgetの中に直接 build メソッドを書きます
 class MyHomePage extends HookConsumerWidget {
@@ -17,46 +15,7 @@ class MyHomePage extends HookConsumerWidget {
     final isSubscribed = useState(false);
 
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: const Text('ListView'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Listview()),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text('GridView'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Gridview()),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text('Map'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Map()),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: const AppDrawer(currentScreen: 'home'), // Drawerを追加
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
