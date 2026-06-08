@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart'; 
 import 'package:practice_flutter/screens/Listview.dart';
 import 'package:practice_flutter/screens/gridview.dart';
 import 'package:practice_flutter/screens/map.dart';
 
-class MyHomePage extends StatefulWidget {
+// 修正点2: HookConsumerWidgetの中に直接 build メソッドを書きます
+class MyHomePage extends HookConsumerWidget {
   const MyHomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    // ボタンの状態を管理
+    final isSubscribed = useState(false);
 
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -27,30 +28,30 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Drawer Header'),
             ),
             ListTile(
-              title: const Text('Item 1'),
+              title: const Text('ListView'),
               onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Listview()),
-                    );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Listview()),
+                );
               },
             ),
             ListTile(
-              title: const Text('Item 2'),
+              title: const Text('GridView'),
               onTap: () {
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Gridview()),
-                      );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Gridview()),
+                );
               },
             ),
             ListTile(
-              title: const Text('Item 3'),
+              title: const Text('Map'),
               onTap: () {
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Map()),
-                      );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Map()),
+                );
               },
             ),
           ],
@@ -58,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text(title),
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -82,12 +83,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Row(
                 children: [
-                  Icon(Icons.person, size: 100),
+                  const Icon(Icons.person, size: 100),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: const [
                       Text(
-                        "高木　陸人",
+                        "高木 陸人",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -103,18 +104,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Listview()),
-                    );
+                    // Hooksを使って状態を切り替える
+                    isSubscribed.value = !isSubscribed.value;
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: isSubscribed.value ? Colors.grey : Colors.red,
+                    foregroundColor: isSubscribed.value ? Colors.black : Colors.white,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Icon(Icons.notifications), Text("Subscribed")],
+                    children: [
+                      Icon(isSubscribed.value ? Icons.notifications_active : Icons.notifications_off),
+                      Text(isSubscribed.value ? "Subscribed" : "Subscribe"),
+                    ],
                   ),
                 ),
               ),
               const SizedBox(height: 10),
+              
+              // --- 以下の動画リスト部分は変更なし ---
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -129,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           "しゅしゅっとご苦労さん(しゅしゅごく)",
                           style: TextStyle(
@@ -161,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           "しゅしゅっとご苦労さん(しゅしゅごく)",
                           style: TextStyle(
@@ -193,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           "しゅしゅっとご苦労さん(しゅしゅごく)",
                           style: TextStyle(
@@ -225,7 +233,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           "しゅしゅっとご苦労さん(しゅしゅごく)",
                           style: TextStyle(
@@ -257,7 +265,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           "しゅしゅっとご苦労さん(しゅしゅごく)",
                           style: TextStyle(
@@ -289,7 +297,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           "しゅしゅっとご苦労さん(しゅしゅごく)",
                           style: TextStyle(
