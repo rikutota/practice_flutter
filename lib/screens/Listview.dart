@@ -1,40 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:practice_flutter/screens/Gridview.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:practice_flutter/widgets/app_drawer.dart';
 
-class Listview extends StatelessWidget {
+
+class Listview extends HookWidget {
   final items = List<String>.generate(100, (i) => "item $i");
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () {
-                        Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Gridview()),
-                        );
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: const AppDrawer(currentScreen: 'listview'),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("ListView"),
